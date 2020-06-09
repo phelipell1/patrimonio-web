@@ -1,0 +1,55 @@
+.btn-voltar{
+    border: none;
+    border-radius: 50%;
+    background-color: tomato;
+    height: 30px;
+    width: 30px;
+}
+
+.titulo_paginas{
+    text-align: center;
+    font-size: 22px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.chekBox{
+    margin-top: 35px;
+}
+.labelBox{
+    margin-top: 35px;
+}
+
+.btn-busca{
+    margin-top: 25px;
+}
+
+.input_form{
+    margin-right: 15px;
+}
+.input_tamanho{
+    width: 105px;
+    margin-left: 10px;
+}
+.tr-tamanhos{
+    font-size: 12px;
+}
+.tr-corpo-tabela{
+    font-size: 10px;
+}
+
+.fieldset1{
+    display: block;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-top: 0.35em;
+    padding-bottom: 0.625em;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    border: 5px groove (internal value);
+}
+.border{
+    color: black;
+}
+.color{
+    background-color: wheat;
+}
