@@ -31,7 +31,7 @@
     margin-left: 10px;
 }
 .tr-tamanhos{
-    font-size: 12px;
+    font-size: 10px;
 }
 .tr-corpo-tabela{
     font-size: 10px;
@@ -52,4 +52,7 @@
 }
 .color{
     background-color: wheat;
+}
+.tabela{
+    font-size: 12px;
 }
