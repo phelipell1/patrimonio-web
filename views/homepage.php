@@ -93,7 +93,7 @@ if (!isset($_SESSION['login'])) {
                 if ($_SESSION['imagem'] == NULL || $_SESSION['imagem'] == "404 Default") {
                     echo '<span class="span"><img class="span" src="../imagens/user.png" width="60"></span>';
                 } else {
-                    echo '<span class="span"><img class="span" src="' . $_SESSION['imagem'] . '" width="38"></span>';
+                    echo '<span class="span"><img class="span" src="' . $_SESSION['imagem'] . '" width="30"></span>';
                 }
                 ?>
             </div>
@@ -144,10 +144,8 @@ if (!isset($_SESSION['login'])) {
                 <li class="active">
                     <a href="../views/logout.php"><img src="../imagens/logout.png" width="30" alt=""><span  class="config-span">Logout</span></a>
                 </li>
-                
             </ul>
             <div class="row">
-                
                 <div class="col-sm-12">
                     <a class="float-lefts" href="../config/configuracoes.php"><img src="../imagens/conf.png" width="20" alt=""></a>
                 <p class="align-top"> Versão 1.0.10</p>

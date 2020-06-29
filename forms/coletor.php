@@ -19,7 +19,6 @@ require_once('../imports_stilos/imports_stiles.php');
 
     });
 </script>
-<div class="container">
     <div class="shadow-lg mb-5 p-5 rounded border">
         <div class="col-sm-12">
             <form id="">
@@ -169,5 +168,4 @@ require_once('../imports_stilos/imports_stiles.php');
                 </form>
             </div>
         </div>
-    </div>
-</div>
+    </>
