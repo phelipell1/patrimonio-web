@@ -1,9 +1,9 @@
 <?php
     class DBUser{
-        private $host = '127.0.0.1';
+        private $host = 'localhost';
         private $usuario = 'admin';
-        private $senha = 'X01nn@h77M';
-        private $database = 'Controle_Usuarios';
+        private $senha = 'U01U3eSARPK10Tl9';
+        private $database = 'controle_usuarios';
 
         public function connecta_mysql(){
             $con = mysqli_connect($this->host, $this->usuario, $this->senha, $this->database);

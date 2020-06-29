@@ -1,8 +1,8 @@
 <?php
     class DB{
-        private $host = '127.0.0.1';
+        private $host = 'localhost';
         private $usuario = 'admin';
-        private $senha = 'X01nn@h77M';
+        private $senha = 'U01U3eSARPK10Tl9';
         private $database = 'patrimonio';
 
         public function connecta_mysql(){
@@ -10,7 +10,7 @@
             mysqli_set_charset($con,'utf8');
 
             if(mysqli_connect_errno()){
-                header('Location: ../PageError/dbError.php');
+               echo mysqli_error($con);
             }
             return $con;
         }
