@@ -128,7 +128,7 @@ $(document).ready(function(){
                     </div>
 
                     <div>
-                        <label for="">Col. Reserva:</label>
+                        <label for="">Imp. Reserva:</label>
                         <input type="text" name="txtColReserva" id="txtColReserva" class="col-sm-6 float-right">
                     </div>
 
@@ -138,23 +138,13 @@ $(document).ready(function(){
                     </div>
 
                     <div>
-                        <label for="">Serial MLB:</label>
-                        <input type="text" name="textSerialMlb" id="textSerialMlb" class="col-sm-6 float-right">
-                    </div>
-
-                    <div>
                         <label for="">N° Bateria:</label>
                         <input type="text" name="txtNumBateria" id="txtNumBateria" class="col-sm-6 float-right">
                     </div>
 
                     <div>
-                        <label for="">N° Patrimônio:</label>
+                        <label for="">N° Impressora:</label>
                         <input type="text" name="textNumPatrimonio" id="textNumPatrimonio" class="col-sm-6 float-right">
-                    </div>
-
-                    <div>
-                        <label for="">N° Coletor:</label>
-                        <input type="text" name="textNumColetor" id="textNumColetor" class="col-sm-6 float-right">
                     </div>
 
                     <div>
@@ -163,7 +153,7 @@ $(document).ready(function(){
                     </div>
 
                     <div>
-                        <label for="">Boot Code:</label>
+                        <label for="">Versão F/W:</label>
                         <input type="text" name="textBootCode" id="textBootCode" class="col-sm-6 float-right">
                     </div>
 
