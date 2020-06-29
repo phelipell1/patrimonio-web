@@ -19,3 +19,6 @@ require_once('../imports_stilos/imports_stiles.php');
 
     });
 </script>
+<div class="container">
+
+</div>
