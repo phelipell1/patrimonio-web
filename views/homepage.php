@@ -60,14 +60,14 @@ if (!isset($_SESSION['login'])) {
                 })
             });
 
-            /*$('#btn_coletor').click(function(){
+            $('#btn_coletor').click(function(){
                     $.ajax({
                     url: '../forms/coletor.php',
                     success:function(data) {
                     $("#div_fomrs").html(data).show();
                 }
                 })
-            });*/
+            });
 
         });
     </script>
@@ -130,7 +130,7 @@ if (!isset($_SESSION['login'])) {
                     <a href="../views/homepage.php"><img src="../imagens/computer.png" width="30" alt=""><span class="config-span">Computadores</span></a>
                 </li>
                 <li class="active" id="btn_coletor">
-                    <a href="../forms/coletor.php"><img src="../imagens/mobile.png" width="30" alt=""><span class="config-span">Coletor</span></a>
+                    <a href="#"><img src="../imagens/mobile.png" width="30" alt=""><span class="config-span">Coletor</span></a>
                 </li>
                 <li class="active">
                     <a href="../forms/impressora.php"><img src="../imagens/printer.png" width="30" alt=""><span class="config-span">Impressoras</span></a>

@@ -1,12 +1,16 @@
 <?php
 require_once('../imports_stilos/imports_stiles.php');
+require_once('../Connections/Conexao.php');
+
+$Obj = new DB();
+$link = $Obj->connecta_mysql();
 ?>
 <script>
-$(document).ready(function(){
+$(document).ready(function() {
     $("#txtNumero").mask("(00)00000-0000");
     //Configurações botões
     $("#btn_Imprime_historico").hide();
-    $("#btn_Editar").hide();
+    //$("#btn_Editar").hide();
     $("#btn_Cancelar").hide();
     $("#btn_Nova_Ordem").hide();
     $("#btn_historico").hide();
@@ -15,61 +19,74 @@ $(document).ready(function(){
     $("#fildSetStatusColetor").hide();
     $("#spanStatus").hide();
 
-    $("#btn_Sair").click(function(){
-        window.location.href = "../views/homepage.php"; 
-    })
+    $("#btn_Sair").click(function() {
+        window.location.href = "../views/homepage.php";
+    });
+
+    $("#btn_Editar").click(function(){
+        $("#fildSetStatusColetor").show();
+        $("#spanStatus").hide();
+        $("#btn_Cancelar").show();
+    });
+    
+    $("#btn_Cancelar").click(function(){
+        $("#btn_Editar").hide();
+        $("#btn_Cancelar").hide();
+        $("#fildSetStatusColetor").hide();
+        $("#spanStatus").show();
+    });
 
 });
 </script>
-<div class="container">
-    <div class="shadow-lg mb-5 p-3 rounded border">
-        <div class="col-sm-12">
-            <div class="row">
-                <div class="form-group col-sm-1">
-                    <label for="cbmEstado" class="col-form-label">Estato:</label>
-                    <select name="cbmEstado" id="cbmEstado" class="form-control form-control-sm">
-                        <option select></option>
-                    </select>
-                </div>
-
-                <div class="form-group col-sm-2">
-                    <label for="cbmRegiao" class="col-form-label">Região:</label>
-                    <select name="cbmRegiao" id="cbmRegiao" class="form-control form-control-sm">
-                        <option select>Selcione</option>
-                    </select>
-                </div>
-
-                <div class="form-group col-sm-2">
-                    <label for="cbmCidade" class="col-form-label">Cidade:</label>
-                    <select name="cbmCidade" id="cbmCidade" class="form-control form-control-sm">
-                        <option select>Selcione</option>
-                    </select>
-                </div>
-
-                <div class="form-group col-sm-2">
-                    <label for="cbmDepartamento" class="col-form-label">Departamento:</label>
-                    <select name="cbmDepartamento" id="cbmDepartamento" class="form-control form-control-sm">
-                        <option select>Selcione</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <input type="text" name="textBusca" id="textBusca" class="form-control-sm form-control col-sm-4 float-right">
-                </div>
-                <div class="">
-                    <button type="button" id="btn_Busca" class="btn btn-sm btn-primary">Buscar</button>
-                </div>
-
+<div class="shadow-lg mb-5 p-3 rounded border">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="form-group col-sm-1">
+                <label for="cbmEstado" class="col-form-label">Estato:</label>
+                <select name="cbmEstado" id="cbmEstado" class="form-control form-control-sm">
+                    <option select></option>
+                </select>
             </div>
 
-            <form action="">
+            <div class="form-group col-sm-2">
+                <label for="cbmRegiao" class="col-form-label">Região:</label>
+                <select name="cbmRegiao" id="cbmRegiao" class="form-control form-control-sm">
+                    <option select>Selcione</option>
+                </select>
+            </div>
+
+            <div class="form-group col-sm-2">
+                <label for="cbmCidade" class="col-form-label">Cidade:</label>
+                <select name="cbmCidade" id="cbmCidade" class="form-control form-control-sm">
+                    <option select>Selcione</option>
+                </select>
+            </div>
+
+            <div class="form-group col-sm-2">
+                <label for="cbmDepartamento" class="col-form-label">Departamento:</label>
+                <select name="cbmDepartamento" id="cbmDepartamento" class="form-control form-control-sm">
+                    <option select>Selcione</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="text" name="textBusca" id="textBusca"
+                    class="form-control-sm form-control col-sm-4 float-right">
+            </div>
+            <div class="">
+                <button type="button" id="btn_Busca" class="btn btn-sm btn-primary">Buscar</button>
+            </div>
+
+        </div>
+
+        <form action="">
 
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-6 scrollBar" >
                     <table class="table table-sm tabela">
                         <thead>
                             <tr class="tr-tamanhos">
-                                <th scope="col">Departamento</th>
+                                <th scope="col">Dp</th>
                                 <th scope="col">N° Coletor</th>
                                 <th scope="col">Série/IMEI</th>
                                 <th scope="col">Patrimônio</th>
@@ -79,21 +96,33 @@ $(document).ready(function(){
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>Leitura</th>
-                                <td>001</td>
-                                <td>354167100726990</td>
-                                <td>0000</td>
-                                <td>MOTO G7</td>
-                                <td>Ativo</td>
-                                <td>-</td>
-                            </tr>
+                            <?
+                            $sql = "select * from coletor";
+                            $result = mysqli_query($link, $sql);
+                            if($result){
+                                while($reg = mysqli_fetch_array($result)){
+                                    echo'
+                                    <tr>
+                                    <th>'.$reg['dep_codigo'].'</th>
+                                    <td>'.$reg['numero_coletor'].'</td>
+                                    <td>'.$reg['serial'].'</td>
+                                    <td>'.$reg['patrimonio'].'</td>
+                                    <td>'.$reg['mcc_codigo'].'</td>
+                                    <td>'.$reg['mdc_codigo'].'</td>
+                                    <td>'.$reg['data_emprestimo'].'</td>
+                                </tr>
+                                    ';
+                                }
+                            }
+                            
+                            ?>
+                            
                         </tbody>
                     </table>
                 </div>
                 <div class="col-sm-4">
 
-                    <div>  
+                    <div>
                         <label for="">Código do Coletor:</label>
                         <input type="text" name="txtCodColetor" id="txtCodColetor" class="col-sm-3 float-right">
                     </div>
@@ -187,40 +216,39 @@ $(document).ready(function(){
                 </div>
                 <div class="col-sm-2">
                     <div id="StatusColetor">
-                    <fieldset class="fieldset1 border">
-                        <legend class="legend">Status Coletor</legend>
-                        <div id="fildSetStatusColetor">
-                        <label for="">Status</label>
-                        <select name="cmbStatusColetor" id="cmbStatusColetor" class="col-sm-12">
-                        <option value=""></option>
-                        </select>
-                        </div>
-                        <span id="spanStatus">Ativo</span>
-                    </fieldset>
+                        <fieldset class="fieldset1 border">
+                            <legend class="legend">Status Coletor</legend>
+                            <div id="fildSetStatusColetor">
+                                <label for="">Status</label>
+                                <select name="cmbStatusColetor" id="cmbStatusColetor" class="col-sm-12">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <span id="spanStatus">Ativo</span>
+                        </fieldset>
                     </div>
 
                     <div id="fildsetChip">
-                    <fieldset class="fieldset1 border">
-                        <legend class="legend">Chip GPRS</legend>
-                        <div>
-                            <label for="">IccID:</label>
-                            <input type="text" name="textIccid" id="textIccid" class="col-sm-12">
-                        </div>
-                        <div>
-                            <label for="">Número:</label>
-                            <input type="text" name="txtNumero" id="txtNumero" class="col-sm-12">
-                        </div>
-                        <div>
-                        <label for="">Operadora</label>
-                        <select name="cbmOperadora" id="cbmOperadora" class="col-sm-12">
-                        <option value=""></option>
-                        </select>
-                        </div>
-                    </fieldset>
+                        <fieldset class="fieldset1 border">
+                            <legend class="legend">Chip GPRS</legend>
+                            <div>
+                                <label for="">IccID:</label>
+                                <input type="text" name="textIccid" id="textIccid" class="col-sm-12">
+                            </div>
+                            <div>
+                                <label for="">Número:</label>
+                                <input type="text" name="txtNumero" id="txtNumero" class="col-sm-12">
+                            </div>
+                            <div>
+                                <label for="">Operadora</label>
+                                <select name="cbmOperadora" id="cbmOperadora" class="col-sm-12">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </fieldset>
                     </div>
                 </div>
             </div>
-            </form>
-        </div>
+        </form>
     </div>
 </div>
