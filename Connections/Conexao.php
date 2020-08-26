@@ -1,8 +1,8 @@
 <?php
     class DB{
-        private $host = 'localhost';
+        private $host = '127.0.0.1';
         private $usuario = 'admin';
-        private $senha = 'U01U3eSARPK10Tl9';
+        private $senha = '123456789';
         private $database = 'patrimonio';
 
         public function connecta_mysql(){
