@@ -1,61 +1,70 @@
 <?php
 require_once('../imports_stilos/imports_stiles.php');
-require_once('../Connections/Conexao.php');
-require_once('../Connections/ConexaoUser.php');
-$seuId = $_GET['id'];
-
-$Obj = new DB();
-$link = $Obj->connecta_mysql();
-
-$sql = "SELECT * FROM coletores WHERE col_codigo = $seuId";
-
-$consulta = mysqli_query($link, $sql);
-
-if ($consulta == true) {
-  while ($reg = mysqli_fetch_array($consulta)) {
-
-    $marca = $reg["marca"];
-    $modelo = $reg['mdc_modelo'];
-    $dataCompra = $reg["data_compra"];
-    $dataEmprestimo = $reg["data_emprestimo"];
-    $colReserva = $reg["no_lugar_da"];
-    $nSerie = $reg["serial"];
-    $serial = $reg["mlb_serial"];
-    $nBateria = $reg["bateria"];
-    $nPatrimonio = $reg["patrimonio"];
-    $ncoletor = $reg["numero_coletor"];
-    $lacre = $reg["garantia"];
-    $bootCode = $reg["boot_code"];
-    $osCode = $reg["os_code"];
-    $observacao = $reg["observacoes"];
-    $dataEdicao = $reg["data_edicao"];
-    $idUsuario = $reg["idusuario"];
-    $status = $reg["sts_status"];
-  }
-} else {
-  echo "ERROR" . mysqli_error($link);
-}
-$OBJ1 = new DBUser();
-$link1 = $OBJ1->connecta_mysql();
-$sql_usuario = "select * from usuario where idusuario = $idUsuario";
-$usuario = mysqli_query($link1, $sql_usuario);
-if ($usuario == true) {
-  while ($dados = mysqli_fetch_array($usuario)) {
-    $nome_user = $dados["nome"];
-  }
-}
-
+//include_once('../controllers/coletorController.php');
+require_once('../controllers/coletorController.php')
 ?>
 <script>
   $(document).ready(function() {
     $("#cod_numero").mask("(00)00000-0000");
-    $('#status_cor').css({
-      'color': 'green'
-    });
-    //$('#NovaOsServico').hide();
+    var cores = "<?echo$sts_codigo?>";
+    if (cores == "Ativo") {
+      $('#status_cor').css({
+        'color': 'green'
+      });
+    }
+    if (cores == "Inativo") {
+      $('#status_cor').css({
+        'color': 'crimson'
+      });
+    }
+    if (cores == "Almoxarifado") {
+      $('#status_cor').css({
+        'color': 'blue'
+      });
+    }
+    if (cores == "Sucata") {
+      $('#status_cor').css({
+        'color': 'red'
+      });
+    }
+    if (cores == "Manutenção") {
+      $('#status_cor').css({
+        'color': 'sienna'
+      });
+    }
+    if (cores == "Transferido") {
+      $('#status_cor').css({
+        'color': 'cyan'
+      });
+    }
+    if (cores == "Emprestado") {
+      $('#status_cor').css({
+        'color': 'magenta'
+      });
+    }
+    if (cores == "Perda") {
+      $('#status_cor').css({
+        'color': 'violet'
+      });
+    }
+    if (cores == "Roubo/Furto") {
+      $('#status_cor').css({
+        'color': 'darkolchild'
+      });
+    }
+    if (cores == "Vendido") {
+      $('#status_cor').css({
+        'color': 'darkslategray'
+      });
+    }
+    if (cores == "Outros") {
+      $('#status_cor').css({
+        'color': 'purple'
+      });
+    }
 
     //Pagina inicializa e todos os itens devem estar desabilitados.
-    $('#cod_marca').attr('disabled', true);
+    $('#marca_coletor').attr('disabled', true);
     $('#cod_modelo').attr('disabled', true);
     $('#dataCompra').attr('disabled', true);
     $('#dataSucata').attr('disabled', true);
@@ -76,7 +85,7 @@ if ($usuario == true) {
 
     ///A partir daqui será para controlar os botões
     $('#btn_editar').click(function() {
-      $('#cod_marca').attr('disabled', false);
+      $('#marca_coletor').attr('disabled', false);
       $('#cod_modelo').attr('disabled', false);
       $('#dataCompra').attr('disabled', true);
       $('#dataSucata').attr('disabled', false);
@@ -97,7 +106,7 @@ if ($usuario == true) {
     });
 
     $('#btn_cancelar').click(function() {
-      $('#cod_marca').attr('disabled', true);
+      $('#marca_coletor').attr('disabled', true);
       $('#cod_modelo').attr('disabled', true);
       $('#dataCompra').attr('disabled', true);
       $('#dataSucata').attr('disabled', true);
@@ -117,10 +126,8 @@ if ($usuario == true) {
       $('#status_cor').show();
     });
 
-
   });
 </script>
-
 <div class="container">
 
   <div class="shadow-lg mb-5 p-3 rounded border" id="dados-coletor">
@@ -132,16 +139,27 @@ if ($usuario == true) {
 
           <div class="form-group">
             <label for="cod_coletor">Cod. Coletor</label>
-            <input type="text" name="cod_coletor" id="cod_coletor" class="col-sm-1 form-control form-control-sm" value="<?echo$seuId?>" readonly>
+            <input type="text" name="cod_coletor" id="cod_coletor" class="col-sm-1 form-control form-control-sm" value="<?echo$col_coletor?>" readonly>
           </div>
 
           <div class="form-row">
             <div class="form-group col">
               <label for="cod_marca">Marca:</label>
-              <select type="text" name="cod_marca" id="cod_marca" class=" form-control form-control-sm">
+              <select type="text" name="marca_coletor" id="marca_coletor" class=" form-control form-control-sm">
                 <option>
                   <?echo$marca?>
                 </option>
+                <?$Obj = new DB();
+                $link = $Obj->connecta_mysql();
+                $query_marca = "select * from marca_coletor";
+                $result = mysqli_query($link, $query_marca);
+                if ($result) {
+                  while ($registros = mysqli_fetch_array($result)) {
+                  echo'<option value="'.$registros['mcc_codigo'].'">'.$registros['marca'].'</option>';
+                }
+                } else {
+                echo "Atenção ! não existe";
+              }?>
               </select>
             </div>
 
@@ -149,19 +167,30 @@ if ($usuario == true) {
               <label for="cod_modelo">Modelo:</label>
               <select type="text" name="cod_modelo" id="cod_modelo" class="form-control form-control-sm">
                 <option value="">
-                  <?echo$modelo?>
+                  <?echo$mdc_modelo?>
                 </option>
+                <?$Obj = new DB();
+                $link = $Obj->connecta_mysql();
+                $query_marca = "select * from modelo_coletor";
+                $result = mysqli_query($link, $query_marca);
+                if ($result) {
+                  while ($registros = mysqli_fetch_array($result)) {
+                  echo'<option value="'.$registros['mdc_codigo'].'">'.$registros['mdc_modelo'].'</option>';
+                }
+                } else {
+                echo "Atenção ! não existe";
+              }?>
               </select>
             </div>
 
             <div class="form-group col">
               <label for="dataCompra">Data Compra:</label>
-              <input type="text" name="dataCompra" id="dataCompra" class="form-control form-control-sm" value="<?echo$dataCompra?>">
+              <input type="text" name="dataCompra" id="dataCompra" class="form-control form-control-sm" value="<?echo$data_compra?>">
             </div>
 
             <div class="form-group col">
               <label for="dataSucata">Data Sucatia:</label>
-              <input type="text" name="dataSucata" id="dataSucata" class="form-control form-control-sm" value="<?echo$dataCompra?>">
+              <input type="text" name="dataSucata" id="dataSucata" class="form-control form-control-sm" value="<?echo$data_sucateamento?>">
             </div>
           </div>
 
@@ -169,22 +198,22 @@ if ($usuario == true) {
 
             <div class="form-group col">
               <label for="dataEmprestimo">Data Emprestimo:</label>
-              <input type="text" name="dataEmprestimo" id="dataEmprestimo" class="form-control form-control-sm" value="<?echo$dataEmprestimo?>">
+              <input type="text" name="dataEmprestimo" id="dataEmprestimo" class="form-control form-control-sm" value="<?echo$data_emprestimo?>">
             </div>
 
             <div class="form-group col">
               <label for="cod_reserva">Col Reserva:</label>
-              <input type="text" name="cod_reserva" id="cod_reserva" class="form-control form-control-sm" value="<?echo$colReserva ?>">
+              <input type="text" name="cod_reserva" id="cod_reserva" class="form-control form-control-sm" value="<?echo$no_lugar_da ?>">
             </div>
 
             <div class="form-group col">
               <label for="cod_serie">N° Série:</label>
-              <input type="text" name="cod_serie" id="cod_serie" class="form-control form-control-sm" value="<?echo$nSerie?>">
+              <input type="text" name="cod_serie" id="cod_serie" class="form-control form-control-sm" value="<?echo$serial?>">
             </div>
 
             <div class="form-group col">
               <label for="cod_serial">Serial MLB:</label>
-              <input type="text" name="cod_serial" id="cod_serial" class="form-control form-control-sm" value="<?echo$serial?>">
+              <input type="text" name="cod_serial" id="cod_serial" class="form-control form-control-sm" value="<?echo$mlb_serial?>">
             </div>
 
           </div>
@@ -193,32 +222,32 @@ if ($usuario == true) {
 
             <div class="form-group col">
               <label for="cod_bateria">N°da Bateria:</label>
-              <input type="text" name="cod_bateria" id="cod_bateria" class="form-control form-control-sm" value="<?echo$nBateria?>">
+              <input type="text" name="cod_bateria" id="cod_bateria" class="form-control form-control-sm" value="<?echo$bateria?>">
             </div>
 
             <div class="form-group col">
               <label for="cod_patrimonio">N° do Patrimônio:</label>
-              <input type="text" name="cod_patrimonio" id="cod_patrimonio" class="form-control form-control-sm" value="<?echo$nPatrimonio?>">
+              <input type="text" name="cod_patrimonio" id="cod_patrimonio" class="form-control form-control-sm" value="<?echo$patrimonio?>">
             </div>
 
             <div class="form-group col">
               <label for="numero_coletor">N° do Coletor:</label>
-              <input type="text" name="numero_coletor" id="numero_coletor" class="form-control form-control-sm" value="<?echo$ncoletor?>">
+              <input type="text" name="numero_coletor" id="numero_coletor" class="form-control form-control-sm" value="<?echo$numero_coletor?>">
             </div>
 
             <div class="form-group col">
               <label for="cod_lacre">Lacre:</label>
-              <input type="text" name="cod_lacre" id="cod_lacre" class="form-control form-control-sm" value="<?echo$lacre?>">
+              <input type="text" name="cod_lacre" id="cod_lacre" class="form-control form-control-sm" value="<?echo$garantia?>">
             </div>
 
             <div class="form-group col">
               <label for="cod_boot">Boot code:</label>
-              <input type="text" name="cod_boot" id="cod_boot" class="form-control form-control-sm" value="<?echo$bootCode?>">
+              <input type="text" name="cod_boot" id="cod_boot" class="form-control form-control-sm" value="<?echo$boot_code?>">
             </div>
 
             <div class="form-group col">
               <label for="cod_os">Os code:</label>
-              <input type="text" name="cod_os" id="cod_os" class="form-control form-control-sm" value="<?echo$osCode?>">
+              <input type="text" name="cod_os" id="cod_os" class="form-control form-control-sm" value="<?echo$os_code?>">
             </div>
 
           </div>
@@ -227,15 +256,15 @@ if ($usuario == true) {
 
             <div class="form-group col">
               <label for="cod_observacao">Observações:</label>
-              <input type="text" name="cod_observacao" id="cod_observacao" class="form-control form-control-sm" value="<?echo$observacao?>">
+              <input type="text" name="cod_observacao" id="cod_observacao" class="form-control form-control-sm" value="<?echo$observacoes?>">
             </div>
 
           </div>
 
           <div class="form-row">
             <span>Ultima edição realizada em: <span>
-                <?echo$dataEdicao?></span> por <span>
-                <?echo$nome_user?></span></span>
+                <?echo$data_edicao?></span> por <span>
+                <?echo$idusuario?></span></span>
           </div>
 
       </div>
@@ -247,11 +276,22 @@ if ($usuario == true) {
             <legend class="legend">Status</legend>
             <select name="cbm_status" id="cbm_status" class="form-control form-control-sm col-sm-8">
               <option value="">
-                <?echo$status?>
+                <?echo$sts_codigo?>
               </option>
+              <?$Obj = new DB();
+                $link = $Obj->connecta_mysql();
+                $query_marca = "select * from cadstatus";
+                $result = mysqli_query($link, $query_marca);
+                if ($result) {
+                  while ($registros = mysqli_fetch_array($result)) {
+                  echo'<option value="'.$registros['sts_codigo'].'">'.$registros['sts_status'].'</option>';
+                }
+                } else {
+                echo "Atenção ! não existe";
+              }?>
             </select>
             <h4 id="status_cor">
-              <?echo$status?>
+              <?echo$sts_codigo?>
             </h4>
           </fieldset>
         </div>

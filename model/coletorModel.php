@@ -1,0 +1,24 @@
+<?php
+$col_coletor = null;
+$cid_municipio = null;
+$reg_regiao = null;
+$dep_departamento = null;
+$marca = null;
+$mdc_modelo = null;
+$serial = null;
+$mlb_serial = null;
+$no_lugar_da = null;
+$patrimonio = null;
+$garantia = null;
+$numero_coletor = null;
+$boot_code = null;
+$os_code = null;
+$bateria = null;
+$data_compra = null;
+$data_sucateamento = null;
+$data_emprestimo = null;
+$data_edicao = null;
+$idusuario = null;
+$observacoes = null;
+$cartao_memoria = null;
+$sts_codigo = null;
