@@ -1,0 +1,36 @@
+<?php
+
+$codigo = null;
+$hco_codigo = null;
+$col_codigo = null;
+$hco_lacre = null;
+$hco_num_col = null;
+$reg_codigo = null;
+$cid_codigo = null;
+$dep_codigo = null;
+$hco_col_emprestada = null;
+$hco_data_ocorrido = null;
+$hco_data_devolucao = null;
+$hco_data_postagem = null;
+$hco_codigo_recebimento = null;
+$hco_codigo_rastreamento = null;
+$hco_ocorrencias = null;
+$hco_resolucao = null;
+$mat_responsavel = null;
+$nome_responsavel = null;
+$fun_codigo = null;
+$hco_advertido = null;
+$hco_idusuario_tec = null;
+$hco_data_envio_ast = null;
+$hco_data_servico = null;
+$hco_data_fecha = null;
+$hco_data_retorno_ast = null;
+$hco_num_os = null;
+$hco_tecnico_sut = null;
+$pecas_e_servico = null;
+$protocolos = null;
+$hco_idusuario_editor = null;
+$hco_data_edicao = null;
+$trg_codigo = null;
+$sts_codigo = null;
+$hco_imagens = null;

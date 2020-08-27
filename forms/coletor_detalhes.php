@@ -1,11 +1,11 @@
 <?php
 require_once('../imports_stilos/imports_stiles.php');
 //include_once('../controllers/coletorController.php');
-require_once('../controllers/coletorController.php')
+require_once('../controllers/coletorController.php');
 ?>
 <script>
   $(document).ready(function() {
-    $("#cod_numero").mask("(00)00000-0000");
+    $("#text_numero").mask("(00)00000-0000");
     var cores = "<?echo$sts_codigo?>";
     if (cores == "Ativo") {
       $('#status_cor').css({
@@ -82,6 +82,10 @@ require_once('../controllers/coletorController.php')
     $('#cod_observacao').attr('disabled', true);
     $('#cbm_status').hide();
     $('#status_cor').show();
+    $('#field-Gprs').hide();
+    $('#microSd').attr('disabled', true);
+    $('#btn_salvar').hide();
+    
 
     ///A partir daqui será para controlar os botões
     $('#btn_editar').click(function() {
@@ -103,6 +107,10 @@ require_once('../controllers/coletorController.php')
       $('#cod_observacao').attr('disabled', false);
       $('#cbm_status').show();
       $('#status_cor').hide();
+      $('#field-Gprs').show();
+      $('#microSd').attr('disabled', false);
+      $('#btn_editar').hide();
+      $('#btn_salvar').show();
     });
 
     $('#btn_cancelar').click(function() {
@@ -124,10 +132,19 @@ require_once('../controllers/coletorController.php')
       $('#cod_observacao').attr('disabled', true);
       $('#cbm_status').hide();
       $('#status_cor').show();
+      $('#field-Gprs').hide();
+      $('#microSd').attr('disabled', true);
+      $('#btn_editar').show();
+      $('#btn_salvar').hide();
+    });
+
+    $('#btn_nova_os').click(function(){
+      window.open('../forms/nova_os.php?id=<?echo$seuId?>','_blank');
     });
 
   });
 </script>
+<br>
 <div class="container">
 
   <div class="shadow-lg mb-5 p-3 rounded border" id="dados-coletor">
@@ -249,11 +266,23 @@ require_once('../controllers/coletorController.php')
               <label for="cod_os">Os code:</label>
               <input type="text" name="cod_os" id="cod_os" class="form-control form-control-sm" value="<?echo$os_code?>">
             </div>
+          </div>
 
+          <div class="form-row col">
+            <div class="form-group col">
+              <?
+              if($cartao_memoria == "0"){
+                echo ' <input type="checkbox" name="microSd" id="microSd" class="form-check-input" value="0">
+                <label for="cod_os" class="form-check-label">Micro SD</label>';
+              }else{
+                echo ' <input type="checkbox" name="microSd" id="microSd" class="form-check-input" value="1" checked>
+                <label for="cod_os" class="form-check-label">Micro SD</label>';
+              }
+              ?>
+            </div>
           </div>
 
           <div class="form-row">
-
             <div class="form-group col">
               <label for="cod_observacao">Observações:</label>
               <input type="text" name="cod_observacao" id="cod_observacao" class="form-control form-control-sm" value="<?echo$observacoes?>">
@@ -263,8 +292,8 @@ require_once('../controllers/coletorController.php')
 
           <div class="form-row">
             <span>Ultima edição realizada em: <span>
-                <?echo$data_edicao?></span> por <span>
-                <?echo$idusuario?></span></span>
+                <b><?echo$data_edicao?></b></span> por <span>
+                <b><?echo$usuario?></b></span></span>
           </div>
 
       </div>
@@ -296,32 +325,55 @@ require_once('../controllers/coletorController.php')
           </fieldset>
         </div>
         <br>
-        <div class="form-group">
+        <div class="form-group" id="field-Gprs">
           <fieldset class="border">
             <legend class="legend">Chip GPRS</legend>
+            <div class="form-row col-12">
 
-            <div class="col-sm-8">
-              <label for="cod_iccid">IccID</label>
-              <input type="text" name="cod_iccid" id="cod_iccid" class="form-control form-control-sm">
+              <div class="form-group">
+                <label for="">IccID</label>
+                <input type="text" name="" id="" class="form-control form-control-sm">
+              </div>
 
-              <label for="cod_numero">Número</label>
-              <input type="tel" class="form-control form-control-sm" name="cod_numero" id="cod_numero">
+              <div class="form-group">
+                <label for="">Número:</label>
+                <input type="text" name="" id="text_numero" class="form-control form-control-sm">
+              </div>
+
             </div>
-            <br>
+            <div class="form-row col-12">
+              <div class="form-group">
+                <input type="checkbox" name="" id="">
+                <label for="">Dados e Voz</label>
+              </div>
+              <p>.....|</p>
+              <div class="form-group">
+                <input type="checkbox" name="" id="">
+                <label for="">Apenas Dados</label>
+              </div>
+              <div class="form-group col-sm-12">
+                <label for="">Operadora:</label>
+                <select name="" id="" class="form-control form-control-sm">
+                  <option value="">Claro</option>
+                  <option value="">Oi</option>
+                  <option value="">Tim</option>
+                  <option value="">Vivo</option>
+                </select>
+              </div>
+            </div>
           </fieldset>
-
         </div>
-
       </div>
       <div class="col-sm-12 ">
         <div class="form-row">
           <div class="form-group">
-            <button type="button" id="btn_imp_historico" class="btn btn-sm btn-primary">Imprimir historico</button>
-            <button type="button" id="btn_editar" class="btn btn-sm btn-primary">Editar</button>
-            <button type="button" id="btn_cancelar" class="btn btn-sm btn-primary">Cancelar</button>
-            <button type="button" id="btn_nova_os" class="btn btn-sm btn-primary">Nova Ordem Serviço</button>
-            <button type="button" id="btn_historico" class="btn btn-sm btn-primary">Histórico</button>
-            <button type="button" id="btn_sair" class="btn btn-sm btn-primary">Sair</button>
+            <button type="button" id="btn_imp_historico" class="btn btn-sm btn-outline-secondary">Imprimir historico</button>
+            <button type="button" id="btn_editar" class="btn btn-sm btn-outline-secondary">Editar</button>
+            <button type="button" id="btn_salvar" class="btn btn-sm btn-outline-secondary">Salvar</button>
+            <button type="button" id="btn_cancelar" class="btn btn-sm btn-outline-secondary">Cancelar</button>
+            <button type="button" id="btn_nova_os" class="btn btn-sm btn-outline-secondary">Nova Ordem Serviço</button>
+            <button type="button" id="btn_historico" class="btn btn-sm btn-outline-secondary">Histórico</button>
+            <button type="button" id="btn_sair" class="btn btn-sm btn-outline-secondary">Sair</button>
           </div>
         </div>
       </div>
@@ -330,82 +382,3 @@ require_once('../controllers/coletorController.php')
 
     </div>
   </div>
-
-  <div class="shadow-lg mb-5 p-3 border" id="NovaOsServico">
-    <form>
-
-      <div class="form-row col">
-        <div class="form-group col-sm-1">
-          <label for="">Código</label>
-          <input type="text" name="" id="" class="form-control form-control-sm" value="<?echo$seuId?>">
-        </div>
-
-        <div class="form-group col-sm-1">
-          <label for="">N° Registro</label>
-          <input type="text" name="" id="" class="form-control form-control-sm" value="<?echo$seuId?>">
-        </div>
-
-        <div class="form-group col-sm-1">
-          <label for="">N° Coletor</label>
-          <input type="text" name="" id="" class="form-control form-control-sm" value="<?echo$seuId?>">
-        </div>
-
-        <div class="form-group col-sm-1">
-          <label for="">Lacre</label>
-          <input type="text" name="" id="" class="form-control form-control-sm" value="<?echo$seuId?>">
-        </div>
-
-        <div class="form-group col-sm-1">
-          <label for="">Estado</label>
-          <select type="text" name="" id="" class="form-control form-control-sm">
-            <option value="">UF</option>
-          </select>
-        </div>
-
-        <div class="form-group col-sm-3">
-          <label for="">Cidade</label>
-          <select type="text" name="" id="" class="form-control form-control-sm">
-            <option value="">Cidades</option>
-          </select>
-        </div>
-
-        <div class="form-group col-sm-2">
-          <label for="">Departamento</label>
-          <select type="text" name="" id="" class="form-control form-control-sm">
-            <option value="">Departamento</option>
-          </select>
-        </div>
-
-        <div class="form-group col-sm-2">
-          <label for="">Emprestada</label>
-          <input type="text" name="" id="" class="form-control form-control-sm">
-        </div>
-
-        <div class="form-group col-sm-12">
-          <label for="">Ocorrências:</label>
-          <textarea name="" id="" rows="2" class="form-control"></textarea>
-        </div>
-
-        <div class="form-group col-sm-12">
-          <label for="">Resolução:</label>
-          <textarea name="" id="" rows="2" class="form-control"></textarea>
-        </div>
-
-        <div class="form-group col-sm-2">
-          <label for="">Mat. do Responsável:</label>
-          <input type="text" name="" id="" class="form-control form-control-sm">
-        </div>
-
-        <div class="col-auto my-1">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">
-              Funcionário advertido?
-            </label>
-          </div>
-        </div>
-
-    </form>
-  </div>
-
-</div>

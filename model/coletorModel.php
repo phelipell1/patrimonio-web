@@ -22,3 +22,4 @@ $idusuario = null;
 $observacoes = null;
 $cartao_memoria = null;
 $sts_codigo = null;
+$usuario = null;
