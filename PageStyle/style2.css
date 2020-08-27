@@ -202,3 +202,6 @@ a.article:hover {
 .tx{
     margin-top: -20;
 }
+.form-control{
+    border-color: #47748b;
+}
